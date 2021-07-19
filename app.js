@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express();
-const linebot = require('linebot');// 判別開發環境
+const linebot = require('linebot');
+
+app.set("view engine", "ejs");
 if (process.env.NODE_ENV !== 'production') {      // 如果不是 production 模式
  require('dotenv').config()                      // 使用 dotenv 讀取 .env 檔案
 }const bot = linebot({
@@ -19,5 +21,5 @@ const linebotParser = bot.parser();bot.on('message', function (event) {
 });
 
 app.get("/", (req, res) => {
-    res.render("hello.ejs")
+    res.render("hello")
 })
