@@ -17,3 +17,7 @@ const linebotParser = bot.parser();bot.on('message', function (event) {
 });app.post('/', linebotParser);app.listen(process.env.PORT || 3000, () => {
  console.log('Express server start')
 });
+
+app.get("/", (req, res) => {
+    res.render("hello.ejs")
+})
