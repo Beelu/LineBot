@@ -18,13 +18,8 @@ const bot = linebot({
 const linebotParser = bot.parser();
 
 bot.on('message', function (event) {
-  event.reply({
-    type: 'sticker',
-    packageId: '1',
-    stickerId: '1'
-  });
   Event.source.member().then((member) => {
-    event.reply({ type: 'text', text: member });
+    event.reply({ type: 'text', text: "hehe" });
   })
 });
 
