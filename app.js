@@ -17,11 +17,16 @@ const bot = linebot({
 const linebotParser = bot.parser();
 
 bot.on('message', function (event) {
-  event.reply({ type: 'text', text: "hehe" }).then((data) => {
-    console.log("hhhhh")
-  }).catch((err) => {
-    console.log(err)
-  });
+  // event.reply({ type: 'text', text: "hehe" }).then((data) => {
+  //   console.log("hhhhh")
+  // }).catch((err) => {
+  //   console.log(err)
+  // });
+  event.source.member().then((data) => {
+    event.reply({ type: 'text', text: data }).then((data) => {
+    }).catch((err) => {
+    });
+  })
 });
 
 //=========================================//
