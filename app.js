@@ -17,7 +17,31 @@ const bot = linebot({
 const linebotParser = bot.parser();
 
 bot.on('message', function (event) {
-  event.reply(['Hello, world 1', 'Hello, world 2']);
+  event.reply({
+    type: 'template',
+    altText: 'this is a carousel template',
+    template: {
+      type: 'carousel',
+      columns: {
+        thumbnailImageUrl: 'https://www.arfarf.tw/wp-content/uploads/10%E4%BB%B6%E4%BA%8B-1024x677.jpg',
+        title: 'this is menu',
+        text: 'description',
+        actions: [{
+          type: 'postback',
+          label: 'Buy',
+          data: 'action=buy&itemid=111'
+        }, {
+          type: 'postback',
+          label: 'Add to cart',
+          data: 'action=add&itemid=111'
+        }, {
+          type: 'uri',
+          label: 'View detail',
+          uri: 'http://example.com/page/111'
+        }]
+      }
+    }
+  });
 });
 
 //=========================================//
