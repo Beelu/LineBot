@@ -18,9 +18,9 @@ const linebotParser = bot.parser();
 
 bot.on('message', function (event) {
   event.reply(event.message.text).then(function (data) {
-    console.log("hhhhh")
+    
   }).catch(function (error) {
-    console.log(err)
+    
   });
   // event.reply({ type: 'text', text: "hehe" }).then((data) => {
   //   console.log("hhhhh")
