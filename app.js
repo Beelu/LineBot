@@ -17,16 +17,7 @@ const bot = linebot({
 const linebotParser = bot.parser();
 
 bot.on('message', function (event) {
-  // event.reply({ type: 'text', text: "hehe" }).then((data) => {
-  //   console.log("hhhhh")
-  // }).catch((err) => {
-  //   console.log(err)
-  // });
-  event.source.member().then((member) => {
-    event.reply({ type: 'text', text: member.memberIds }).then((data) => {
-    }).catch((err) => {
-    });
-  })
+  event.reply(['Hello, world 1', 'Hello, world 2']);
 });
 
 //=========================================//
