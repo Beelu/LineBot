@@ -21,5 +21,5 @@ const linebotParser = bot.parser();bot.on('message', function (event) {
 });
 
 app.get("/", (req, res) => {
-    res.render("hello")
+    res.render("hello");
 })
