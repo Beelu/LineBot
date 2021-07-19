@@ -22,8 +22,8 @@ bot.on('message', function (event) {
   // }).catch((err) => {
   //   console.log(err)
   // });
-  event.source.member().then((data) => {
-    event.reply({ type: 'text', text: data }).then((data) => {
+  event.source.member().then((member) => {
+    event.reply({ type: 'text', text: member.memberIds }).then((data) => {
     }).catch((err) => {
     });
   })
