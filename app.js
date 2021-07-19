@@ -23,7 +23,7 @@ bot.on('message', function (event) {
     packageId: '1',
     stickerId: '1'
   });
-  LineBot.getGroupMember(event.source.groupId).then((member) => {
+  Event.source.member().then((member) => {
     event.reply({ type: 'text', text: member });
   })
 });
