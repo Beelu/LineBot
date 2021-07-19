@@ -1,0 +1,27 @@
+{
+  "name": "linebot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "linebot": "^1.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "node app.js",
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beelu/LineBot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Beelu/LineBot/issues"
+  },
+  "homepage": "https://github.com/Beelu/LineBot#readme"
+}
