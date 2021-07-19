@@ -7,7 +7,6 @@ const app = express();
 const linebot = require('linebot');
 
 app.set("view engine", "ejs");
-
 //============================================================//
 const bot = linebot({
   channelId: process.env.CHANNEL_ID,
@@ -19,18 +18,15 @@ const linebotParser = bot.parser();
 
 bot.on('message', function (event) {
   event.reply(event.message.text).then(function (data) {
-    // 當訊息成功回傳後的處理
+    console.log("hhhhh")
   }).catch(function (error) {
-    // 當訊息回傳失敗後的處理
+    console.log(err)
   });
-  event.reply({ type: 'text', text: "hehe" }).then((data) => {
-
-  }).catch((err) => {
-
-  });
-  Event.source.member().then((member) => {
-    event.reply({ type: 'text', text: "hehe" });
-  })
+  // event.reply({ type: 'text', text: "hehe" }).then((data) => {
+  //   console.log("hhhhh")
+  // }).catch((err) => {
+  //   console.log(err)
+  // });
 });
 
 //=========================================//
