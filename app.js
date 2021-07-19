@@ -17,20 +17,16 @@ const bot = linebot({
 const linebotParser = bot.parser();
 
 bot.on('message', function (event) {
-  event.reply(event.message.text).then(function (data) {
-    
-  }).catch(function (error) {
-    
+  event.reply({ type: 'text', text: "hehe" }).then((data) => {
+    console.log("hhhhh")
+  }).catch((err) => {
+    console.log(err)
   });
-  // event.reply({ type: 'text', text: "hehe" }).then((data) => {
-  //   console.log("hhhhh")
-  // }).catch((err) => {
-  //   console.log(err)
-  // });
 });
 
 //=========================================//
-app.post('/', linebotParser);app.listen(process.env.PORT || 3000, () => {
+app.post('/', linebotParser);
+app.listen(process.env.PORT || 3000, () => {
   console.log('Express server start')
 });
 
