@@ -40,6 +40,7 @@ bot.on('message', function (event) {
       originalContentUrl: "//i.imgur.com/MaVuS2Ib.jpg",
       previewImageUrl: "//i.imgur.com/MaVuS2Ib.jpg"
     });
+    event.reply({ type: 'text', text: "//i.imgur.com/MaVuS2Ib.jpg" });
   }
 });
 
