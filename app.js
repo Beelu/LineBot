@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const linebot = require('linebot');
-const line = require('@line/bot-sdk');
+// const line = require('@line/bot-sdk');
 const cheerio = require('cheerio');
 const fs = require('fs');
 const request = require('request');
@@ -13,65 +13,72 @@ const resolve = require('path');
 
 app.set("view engine", "ejs");
 //============================================================//
-// const bot = linebot({
-//   channelId: process.env.CHANNEL_ID,
-//   channelSecret: process.env.CHANNEL_SECRET,
-//   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
-// });
-
-// const linebotParser = bot.parser();
-
-// bot.on('message', function (event) {
-//   if(event.message.text == '笑話'){
-//     getJoke().then(success => {
-//       event.reply({ type: 'text', text: success });
-//     });
-//   }else if(event.message.text.slice(0, 4) == "搜尋圖片"){
-//     search = event.message.text.slice(4);
-//     getImg(search).then(success => {
-//       success = "https:" + success;
-//       event.reply({
-//         type: 'image',
-//         originalContentUrl: success,
-//         previewImageUrl: success
-//       });
-//     })
-//   }
-// });
-
-const config = {
+const bot = linebot({
   channelId: process.env.CHANNEL_ID,
   channelSecret: process.env.CHANNEL_SECRET,
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
-};
-
-const client = new line.Client(config);
-
-app.post('/', line.middleware(config), (req, res) => {
-  Promise
-    .all(req.body.events.map(handleEvent))
-    .then((result) => res.json(result))
-    .catch((err) => {
-      console.error(err);
-      res.status(500).end();
-    });
 });
 
-// event handler
-function handleEvent(event) {
-  if (event.type == 'message') {
-    if(event.source.type == 'group'){
-      client.getGroupMemberIds(event.source.groupId).then((ids) => {
-        ids.forEach((id) => {
-          client.replyMessage(event.source.groupId, id);
-        })
-      })
-      return Promise.resolve(null);
-    }
-  }else{
-    return Promise.resolve(null);
+const linebotParser = bot.parser();
+
+bot.on('message', function (event) {
+  if(event.message.text == '笑話'){
+    getJoke().then(success => {
+      event.reply({ type: 'text', text: success });
+    });
+  }else if(event.message.text.slice(0, 4) == "搜尋圖片"){
+    search = event.message.text.slice(4);
+    getImg(search).then(success => {
+      success = "https:" + success;
+      event.reply({
+        type: 'image',
+        originalContentUrl: success,
+        previewImageUrl: success
+      });
+    })
   }
-}
+
+  bot.getGroupMemberProfile(event.source.groupId, event.source.userId).then(function (profile) {
+    event.reply('Hello ' + profile.displayName);
+  });
+  event.source.profile().then(function (profile) {
+    event.reply('Hello ' + profile.displayName);
+  });
+});
+
+// const config = {
+//   channelId: process.env.CHANNEL_ID,
+//   channelSecret: process.env.CHANNEL_SECRET,
+//   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
+// };
+
+// const client = new line.Client(config);
+
+// app.post('/', line.middleware(config), (req, res) => {
+//   Promise
+//     .all(req.body.events.map(handleEvent))
+//     .then((result) => res.json(result))
+//     .catch((err) => {
+//       console.error(err);
+//       res.status(500).end();
+//     });
+// });
+
+// // event handler
+// function handleEvent(event) {
+//   if (event.type == 'message') {
+//     if(event.source.type == 'group'){
+//       client.getGroupMemberIds(event.source.groupId).then((ids) => {
+//         ids.forEach((id) => {
+//           client.replyMessage(event.source.groupId, id);
+//         })
+//       })
+//       return Promise.resolve(null);
+//     }
+//   }else{
+//     return Promise.resolve(null);
+//   }
+// }
 
 //=============================================================//
 
@@ -112,7 +119,7 @@ const getImg = function (search) {
 };
 
 //=============================================================//
-//app.post('/', linebotParser);
+app.post('/', linebotParser);
 app.listen(process.env.PORT || 3000, () => {
   console.log('Express server start')
 });
