@@ -12,10 +12,16 @@ const { resolve } = require('path');
 
 app.set("view engine", "ejs");
 //============================================================//
+// const bot = linebot({
+//   channelId: process.env.CHANNEL_ID,
+//   channelSecret: process.env.CHANNEL_SECRET,
+//   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
+// });
+
 const bot = linebot({
-  channelId: process.env.CHANNEL_ID,
-  channelSecret: process.env.CHANNEL_SECRET,
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
+  channelId: "1656230539",
+  channelSecret: "763ec39a9ea1b1e5249440c1229f3ba2",
+  channelAccessToken: "rfKA5Wg5QxNaIfB7hFJuacbuVtNo1ZvNxqEfMt+jrvuCkeXMIu9HVquGVsJ7E97wqtH0jDwNUrxJeNfOfSpgBm+6GHfv0K8qKSWMJll4UEespRgsUDIqAE8pjcPvOOXGB7ciOoQVzaE3lUbAvZ3XjgdB04t89/1O/w1cDnyilFU="
 });
 
 const linebotParser = bot.parser();
