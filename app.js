@@ -30,17 +30,16 @@ bot.on('message', function (event) {
     getImg(search).then(success => {
       event.reply({
         type: 'image',
-        originalContentUrl: success,
-        previewImageUrl: success
+        originalContentUrl: success.slice(2),
+        previewImageUrl: success.slice(2)
       });
     })
   }else if(event.message.text == "貓貓"){
     event.reply({
       type: 'image',
-      originalContentUrl: "//i.imgur.com/MaVuS2Ib.jpg",
-      previewImageUrl: "//i.imgur.com/MaVuS2Ib.jpg"
+      originalContentUrl: "i.imgur.com/MaVuS2Ib.jpg",
+      previewImageUrl: "i.imgur.com/MaVuS2Ib.jpg"
     });
-    event.reply({ type: 'text', text: "//i.imgur.com/MaVuS2Ib.jpg" });
   }
 });
 
