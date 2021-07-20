@@ -25,11 +25,20 @@ bot.on('message', function (event) {
     getJoke().then(success => {
       event.reply({ type: 'text', text: success });
     });
+  }else if(event.message.text.slice(0, 4) == "搜尋圖片"){
+    search = event.message.text.slice(4);
+    getImg(search).then(success => {
+      event.reply({
+        type: 'image',
+        originalContentUrl: success,
+        previewImageUrl: success
+      });
+    })
   }
 });
 
-//=========================================//
-
+//=============================================================//
+//笑話
 function getJoke() {
   return new Promise((resolve, reject) => {
     fs.readFile('./joke.txt', function (error, data) {
@@ -46,7 +55,26 @@ function getJoke() {
   })
 }
 
-//=========================================//
+//搜尋圖片
+const getImg = function (search) {
+  return new Promise((resolve, reject) => {
+    let weburl = "https://imgur.com/search?q=" + encodeURI(search);
+    request({
+      url: weburl,
+      method: "GET"
+    }, function (error, response, body) {
+      if (error || !body) {
+        reject("爆炸惹")
+      }
+      const $ = cheerio.load(body);
+      const img = $(".post .image-list-link");
+      let rand = Math.floor(Math.random() * 10);
+      resolve(img.eq(rand).find('img').attr('src'));
+    });
+  });
+};
+
+//=============================================================//
 app.post('/', linebotParser);
 app.listen(process.env.PORT || 3000, () => {
   console.log('Express server start')
