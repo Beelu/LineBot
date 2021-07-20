@@ -5,52 +5,52 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const linebot = require('linebot');
+const line = require('@line/bot-sdk');
 const cheerio = require('cheerio');
 const fs = require('fs');
 const request = require('request');
-const { resolve } = require('path');
+const resolve = require('path');
 
 app.set("view engine", "ejs");
 //============================================================//
-const bot = linebot({
+// const bot = linebot({
+//   channelId: process.env.CHANNEL_ID,
+//   channelSecret: process.env.CHANNEL_SECRET,
+//   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
+// });
+
+// const linebotParser = bot.parser();
+
+// bot.on('message', function (event) {
+//   if(event.message.text == '笑話'){
+//     getJoke().then(success => {
+//       event.reply({ type: 'text', text: success });
+//     });
+//   }else if(event.message.text.slice(0, 4) == "搜尋圖片"){
+//     search = event.message.text.slice(4);
+//     getImg(search).then(success => {
+//       success = "https:" + success;
+//       event.reply({
+//         type: 'image',
+//         originalContentUrl: success,
+//         previewImageUrl: success
+//       });
+//     })
+//   }
+// });
+
+const client = new line.Client({
   channelId: process.env.CHANNEL_ID,
   channelSecret: process.env.CHANNEL_SECRET,
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 
-const linebotParser = bot.parser();
+const message = {
+  type: 'text',
+  text: 'Hello World!'
+};
 
-bot.on('message', function (event) {
-  if(event.message.text == '笑話'){
-    getJoke().then(success => {
-      event.reply({ type: 'text', text: success });
-    });
-  }else if(event.message.text.slice(0, 4) == "搜尋圖片"){
-    search = event.message.text.slice(4);
-    getImg(search).then(success => {
-      success = "https:" + success;
-      event.reply({
-        type: 'image',
-        originalContentUrl: success,
-        previewImageUrl: success
-      });
-    })
-  }
-
-  event.source.profile().then(function (profile) {
-    event.reply('Hello ' + profile.displayName);
-  });
-
-  bot.getGroupMember(event.source.groupId).then(function (member) {
-    event.reply('Hello');
-    event.reply('@' + member);
-    event.reply('@' + member[0]);
-    console.log(member);
-    bot.getUserProfile(member.memberIds[0]).then(function (profile) {
-      event.reply('Hello ' + profile.displayName);
-    });
-  });
-});
+client.replyMessage(events.replyToken, message)
 
 //=============================================================//
 
