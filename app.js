@@ -47,7 +47,7 @@ const config = {
 
 const client = new line.Client(config);
 
-app.post('/callback', line.middleware(config), (req, res) => {
+app.post('/', line.middleware(config), (req, res) => {
   Promise
     .all(req.body.events.map(handleEvent))
     .then((result) => res.json(result))
