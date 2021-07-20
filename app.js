@@ -37,9 +37,9 @@ bot.on('message', function (event) {
     })
   }
 
-  event.source.member().then(function (member) {
+  bot.getGroupMember(event.source.groupId).then(function (member) {
     event.reply('Hello');
-    event.reply('@' + member.memberIds[1]);
+    event.reply('@' + member.memberIds[0]);
     console.log(member.memberIds);
     bot.getUserProfile(member.memberIds[0]).then(function (profile) {
       event.reply('Hello ' + profile.displayName);
