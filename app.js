@@ -35,16 +35,15 @@ bot.on('message', function (event) {
         previewImageUrl: success
       });
     })
-  }else if(event.message.text == "貓貓"){
-    event.reply({
-      type: 'image',
-      originalContentUrl: "https://i.imgur.com/MaVuS2Ib.jpg",
-      previewImageUrl: "https://i.imgur.com/MaVuS2Ib.jpg"
-    });
   }
+
+  LineBot.getGroupMemberProfile(event.source.groupId, event.source.userId).then(function(profile){
+    event.reply('Hello @' + profile.displayName);
+  })
 });
 
 //=============================================================//
+
 //笑話
 function getJoke() {
   return new Promise((resolve, reject) => {
@@ -80,14 +79,6 @@ const getImg = function (search) {
     });
   });
 };
-
-let s = "搜尋圖片狗狗"
-if(s.slice(0,4) == "搜尋圖片"){
-  let search = s.slice(4);
-  getImg(search).then(success => {
-    console.log(success);
-  });
-}
 
 //=============================================================//
 app.post('/', linebotParser);
