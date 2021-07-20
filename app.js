@@ -41,8 +41,9 @@ bot.on('message', function (event) {
   bot.getGroupMemberProfile(event.source.groupId, event.source.userId).then(function (profile) {
     event.reply('Hello ' + profile.displayName);
   });
-  event.source.profile().then(function (profile) {
-    event.reply('Hello ' + profile.displayName);
+  event.source.member().then(function (member) {
+    event.reply('Hello ' + member);
+    event.reply('Hello ' + member.memberIds[0]);
   });
 });
 
