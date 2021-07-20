@@ -2,9 +2,13 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-const express = require('express')
+const express = require('express');
 const app = express();
 const linebot = require('linebot');
+const cheerio = require('cheerio');
+const fs = require('fs');
+const request = require('request');
+const { resolve } = require('path');
 
 app.set("view engine", "ejs");
 //============================================================//
@@ -17,32 +21,30 @@ const bot = linebot({
 const linebotParser = bot.parser();
 
 bot.on('message', function (event) {
-  event.reply({
-    type: 'template',
-    altText: 'this is a carousel template',
-    template: {
-      type: 'carousel',
-      columns: {
-        thumbnailImageUrl: 'https://www.arfarf.tw/wp-content/uploads/10%E4%BB%B6%E4%BA%8B-1024x677.jpg',
-        title: 'this is menu',
-        text: 'description',
-        actions: [{
-          type: 'postback',
-          label: 'Buy',
-          data: 'action=buy&itemid=111'
-        }, {
-          type: 'postback',
-          label: 'Add to cart',
-          data: 'action=add&itemid=111'
-        }, {
-          type: 'uri',
-          label: 'View detail',
-          uri: 'http://example.com/page/111'
-        }]
-      }
-    }
-  });
+  if(event.message.text == '笑話'){
+    getJoke().then(success => {
+      event.reply({ type: 'text', text: success });
+    });
+  }
 });
+
+//=========================================//
+
+function getJoke() {
+  return new Promise((resolve, reject) => {
+    fs.readFile('./joke.txt', function (error, data) {
+      if (error) {
+          let result =  '爆炸惹';
+          reject(result);
+      }else{
+        let jokes = data.toString().split('=====');
+        let rand = Math.floor(Math.random() * jokes.length);
+        let result =  jokes[rand];
+        resolve(result);
+      }
+    })
+  })
+}
 
 //=========================================//
 app.post('/', linebotParser);
