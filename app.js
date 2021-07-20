@@ -38,7 +38,7 @@ bot.on('message', function (event) {
   }
 
   bot.getGroupMember(event.source.groupId).then(function(member){
-    event.reply('Hello @' + member.memberIds);
+    event.reply('Hello @' + member);
   })
 });
 
