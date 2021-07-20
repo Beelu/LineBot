@@ -39,7 +39,11 @@ bot.on('message', function (event) {
 
   event.source.member().then(function (member) {
     event.reply('Hello');
-    event.reply('@' + member.memberIds[0]);
+    event.reply('@' + member.memberIds[1]);
+    console.log(member.memberIds);
+    bot.getUserProfile(member.memberIds[0]).then(function (profile) {
+      event.reply('Hello ' + profile.displayName);
+    });
   });
 });
 
