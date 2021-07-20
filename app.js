@@ -39,18 +39,34 @@ app.set("view engine", "ejs");
 //   }
 // });
 
-const client = new line.Client({
+const config = {
   channelId: process.env.CHANNEL_ID,
   channelSecret: process.env.CHANNEL_SECRET,
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
-});
-
-const message = {
-  type: 'text',
-  text: 'Hello World!'
 };
 
-client.replyMessage(events.replyToken, message)
+const client = new line.Client(config);
+
+app.post('/callback', line.middleware(config), (req, res) => {
+  Promise
+    .all(req.body.events.map(handleEvent))
+    .then((result) => res.json(result))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).end();
+    });
+});
+
+// event handler
+function handleEvent(event) {
+  if (event.type !== 'message' || event.message.type !== 'text') {
+    return Promise.resolve(null);
+  }
+
+  const echo = { type: 'text', text: event.message.text };
+
+  return client.replyMessage(event.replyToken, echo);
+}
 
 //=============================================================//
 
