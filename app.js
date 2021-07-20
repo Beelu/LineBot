@@ -28,17 +28,18 @@ bot.on('message', function (event) {
   }else if(event.message.text.slice(0, 4) == "搜尋圖片"){
     search = event.message.text.slice(4);
     getImg(search).then(success => {
+      success = "https:" + success;
       event.reply({
         type: 'image',
-        originalContentUrl: success.slice(2),
-        previewImageUrl: success.slice(2)
+        originalContentUrl: success,
+        previewImageUrl: success
       });
     })
   }else if(event.message.text == "貓貓"){
     event.reply({
       type: 'image',
-      originalContentUrl: "i.imgur.com/MaVuS2Ib.jpg",
-      previewImageUrl: "i.imgur.com/MaVuS2Ib.jpg"
+      originalContentUrl: "https://i.imgur.com/MaVuS2Ib.jpg",
+      previewImageUrl: "https://i.imgur.com/MaVuS2Ib.jpg"
     });
   }
 });
