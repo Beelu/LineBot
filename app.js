@@ -59,13 +59,18 @@ app.post('/', line.middleware(config), (req, res) => {
 
 // event handler
 function handleEvent(event) {
-  if (event.type !== 'message' || event.message.type !== 'text') {
+  if (event.type == 'message') {
+    if(event.source.type == 'group'){
+      client.getGroupMemberIds(event.source.groupId).then((ids) => {
+        ids.forEach((id) => {
+          client.replyMessage(event.source.groupId, id);
+        })
+      })
+      return Promise.resolve(null);
+    }
+  }else{
     return Promise.resolve(null);
   }
-
-  const echo = { type: 'text', text: event.message.text };
-
-  return client.replyMessage(event.replyToken, echo);
 }
 
 //=============================================================//
