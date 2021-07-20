@@ -43,7 +43,7 @@ bot.on('message', function (event) {
   });
   event.source.member().then(function (member) {
     event.reply('Hello ' + member);
-    event.reply('Hello ' + member.memberIds[0]);
+    //event.reply('Hello ' + member.memberIds[0]);
   });
 });
 
