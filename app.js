@@ -37,7 +37,7 @@ bot.on('message', function (event) {
     })
   }
 
-  LineBot.getGroupMemberProfile(event.source.groupId, event.source.userId).then(function(profile){
+  bot.getGroupMemberProfile(event.source.groupId, event.source.userId).then(function(profile){
     event.reply('Hello @' + profile.displayName);
   })
 });
