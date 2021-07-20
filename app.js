@@ -34,6 +34,12 @@ bot.on('message', function (event) {
         previewImageUrl: success
       });
     })
+  }else if(event.message.text == "貓貓"){
+    event.reply({
+      type: 'image',
+      originalContentUrl: "//i.imgur.com/MaVuS2Ib.jpg",
+      previewImageUrl: "//i.imgur.com/MaVuS2Ib.jpg"
+    });
   }
 });
 
@@ -73,6 +79,14 @@ const getImg = function (search) {
     });
   });
 };
+
+let s = "搜尋圖片狗狗"
+if(s.slice(0,4) == "搜尋圖片"){
+  let search = s.slice(4);
+  getImg(search).then(success => {
+    console.log(success);
+  });
+}
 
 //=============================================================//
 app.post('/', linebotParser);
