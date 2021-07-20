@@ -107,7 +107,7 @@ const getImg = function (search) {
 };
 
 //=============================================================//
-app.post('/', linebotParser);
+//app.post('/', linebotParser);
 app.listen(process.env.PORT || 3000, () => {
   console.log('Express server start')
 });
