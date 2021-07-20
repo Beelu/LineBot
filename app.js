@@ -37,7 +37,7 @@ bot.on('message', function (event) {
     })
   }
 
-  bot.getRoomMemberProfile(event.source.groupId, event.source.userId).then(function (profile) {
+  event.source.profile().then(function (profile) {
     event.reply('Hello ' + profile.displayName);
   });
 
