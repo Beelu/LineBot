@@ -10,9 +10,12 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const request = require('request');
 const resolve = require('path');
+const { TextAnalyticsClient, AzureKeyCredential } = require("@azure/ai-text-analytics");
+const textAnalyticsClient = new TextAnalyticsClient("https://12341234.cognitiveservices.azure.com/",  new AzureKeyCredential('088f06feefd842fcabc7a17bc0005c0f'));
 
 app.set("view engine", "ejs");
 //============================================================//
+
 const bot = linebot({
   channelId: process.env.CHANNEL_ID,
   channelSecret: process.env.CHANNEL_SECRET,
@@ -36,6 +39,10 @@ bot.on('message', function (event) {
         previewImageUrl: success
       });
     })
+  }else{
+    sentimentAnalysis(textAnalyticsClient, event.message.text).then(suc => {
+      event.reply({ type: 'text', text: "正面:" + suc.positive + "   負面:" + suc.negative + "  中立:" + suc.neutral });
+    });
   }
 });
 
@@ -96,6 +103,7 @@ function getJoke() {
 const getImg = function (search) {
   return new Promise((resolve, reject) => {
     let weburl = "https://imgur.com/search?q=" + encodeURI(search);
+    console.log(weburl)
     request({
       url: weburl,
       method: "GET"
@@ -110,6 +118,19 @@ const getImg = function (search) {
     });
   });
 };
+
+//文字分析
+async function sentimentAnalysis(client, str){
+  const sentimentInput = [{
+      text: str,
+      id: "0",
+      language: "zh-hant"
+  }];
+  const sentimentResult = await client.analyzeSentiment(sentimentInput);
+
+  // console.log(sentimentResult[0].confidenceScores);
+  return sentimentResult[0].confidenceScores;
+}
 
 //=============================================================//
 app.post('/', linebotParser);
