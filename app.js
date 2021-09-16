@@ -11,7 +11,7 @@ const fs = require('fs');
 const request = require('request');
 const resolve = require('path');
 const { TextAnalyticsClient, AzureKeyCredential } = require("@azure/ai-text-analytics");
-const textAnalyticsClient = new TextAnalyticsClient("https://12341234.cognitiveservices.azure.com/",  new AzureKeyCredential('088f06feefd842fcabc7a17bc0005c0f'));
+const textAnalyticsClient = new TextAnalyticsClient(process.env.azure_url,  new AzureKeyCredential(process.env.azure_key));
 
 app.set("view engine", "ejs");
 //============================================================//
