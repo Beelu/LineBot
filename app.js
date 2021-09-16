@@ -49,10 +49,10 @@ bot.on('message', function (event) {
         previewImageUrl: success
       });
     })
-  }else if (event.message.text == "測試"){
-    testDB().then(success => {
-      event.reply({ type: 'text', text: success });
-    })
+  // }else if (event.message.text == "測試"){
+  //   testDB().then(success => {
+  //     event.reply({ type: 'text', text: success });
+  //   })
   }else{
     sentimentAnalysis(textAnalyticsClient, event.message.text).then(suc => {
       event.reply({ type: 'text', text: "正面:" + suc.positive + "   負面:" + suc.negative + "  中立:" + suc.neutral });
