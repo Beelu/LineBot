@@ -11,8 +11,8 @@ const fs = require('fs');
 const request = require('request');
 const resolve = require('path');
 const mysql = require('mysql');
-const { TextAnalyticsClient, AzureKeyCredential } = require("@azure/ai-text-analytics");
-const textAnalyticsClient = new TextAnalyticsClient(process.env.azure_url,  new AzureKeyCredential(process.env.azure_key));
+// const { TextAnalyticsClient, AzureKeyCredential } = require("@azure/ai-text-analytics");
+// const textAnalyticsClient = new TextAnalyticsClient(process.env.azure_url,  new AzureKeyCredential(process.env.azure_key));
 
 var connection = mysql.createConnection({
   host     : process.env.gcp_endpoint,
@@ -53,10 +53,6 @@ bot.on('message', function (event) {
   //   testDB().then(success => {
   //     event.reply({ type: 'text', text: success });
   //   })
-  }else{
-    sentimentAnalysis(textAnalyticsClient, event.message.text).then(suc => {
-      event.reply({ type: 'text', text: "正面:" + suc.positive + "   負面:" + suc.negative + "  中立:" + suc.neutral });
-    });
   }
 });
 
@@ -132,19 +128,6 @@ const getImg = function (search) {
     });
   });
 };
-
-//文字分析
-async function sentimentAnalysis(client, str){
-  const sentimentInput = [{
-      text: str,
-      id: "0",
-      language: "zh-hant"
-  }];
-  const sentimentResult = await client.analyzeSentiment(sentimentInput);
-
-  // console.log(sentimentResult[0].confidenceScores);
-  return sentimentResult[0].confidenceScores;
-}
 
 //測試資料庫
 function testDB(){
