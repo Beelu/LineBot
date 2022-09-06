@@ -27,6 +27,8 @@ bot.on('message', function (event) {
     getJoke().then(success => {
       event.reply({ type: 'text', text: success });
     });
+  }else if(event.message.text == '愛你'){
+      event.reply({ type: 'text', text: '我也愛尼' });
   }else if(event.message.text.slice(0, 4) == "搜尋圖片"){
     search = event.message.text.slice(4);
     getImg(search).then(success => {
