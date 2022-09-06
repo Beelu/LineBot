@@ -10,18 +10,6 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const request = require('request');
 const resolve = require('path');
-const mysql = require('mysql');
-// const { TextAnalyticsClient, AzureKeyCredential } = require("@azure/ai-text-analytics");
-// const textAnalyticsClient = new TextAnalyticsClient(process.env.azure_url,  new AzureKeyCredential(process.env.azure_key));
-
-var connection = mysql.createConnection({
-  host     : process.env.gcp_endpoint,
-  user     : 'root',
-  password : process.env.gcp_PW,
-  database : 'e_line'
-});
-
-connection.connect();
 
 app.set("view engine", "ejs");
 //============================================================//
@@ -49,46 +37,8 @@ bot.on('message', function (event) {
         previewImageUrl: success
       });
     })
-  // }else if (event.message.text == "測試"){
-  //   testDB().then(success => {
-  //     event.reply({ type: 'text', text: success });
-  //   })
   }
 });
-
-// const config = {
-//   channelId: process.env.CHANNEL_ID,
-//   channelSecret: process.env.CHANNEL_SECRET,
-//   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
-// };
-
-// const client = new line.Client(config);
-
-// app.post('/', line.middleware(config), (req, res) => {
-//   Promise
-//     .all(req.body.events.map(handleEvent))
-//     .then((result) => res.json(result))
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).end();
-//     });
-// });
-
-// // event handler
-// function handleEvent(event) {
-//   if (event.type == 'message') {
-//     if(event.source.type == 'group'){
-//       client.getGroupMemberIds(event.source.groupId).then((ids) => {
-//         ids.forEach((id) => {
-//           client.replyMessage(event.source.groupId, id);
-//         })
-//       })
-//       return Promise.resolve(null);
-//     }
-//   }else{
-//     return Promise.resolve(null);
-//   }
-// }
 
 //=============================================================//
 
@@ -129,15 +79,6 @@ const getImg = function (search) {
   });
 };
 
-//測試資料庫
-function testDB(){
-  return new Promise((resolve, reject) => {
-    connection.query('SELECT lineId FROM user', function (error, results) {
-      if (error){ reject("爆炸") };
-      resolve(results[0].lineId);
-    });
-  })
-}
 //=============================================================//
 app.post('/', linebotParser);
 app.listen(process.env.PORT || 3000, () => {
@@ -147,5 +88,3 @@ app.listen(process.env.PORT || 3000, () => {
 app.get("/", (req, res) => {
     res.render("hello");
 })
-
-connection.end();
